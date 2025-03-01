@@ -9,11 +9,6 @@ Real-time streaming responses mimic human pacing, though persistent memory searc
 
 ---
 
-## 项目简介
-一个基于 Tkinter 的智能桌面聊天应用，模拟拥有长期记忆的姐姐角色。通过多级记忆管理系统（短期/长期/潜在/重要记忆）和语义检索技术，实现自然连贯的上下文对话，支持自定义角色设定和流式响应交互。
-
----
-
 ## 核心功能
 - 🎭 可定制的姐弟角色扮演对话模式
 - 🧠 四级记忆管理系统（自动压缩/检索/存储）
