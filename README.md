@@ -29,6 +29,13 @@ A Tkinter-based chatbot implementing hierarchical memory architecture (short-ter
 ![图片描述](https://github.com/ixiaokaikai/SisterAI-Chat-Memory/blob/main/liuchengtu.png)
 
 ---
+
+## 运行图
+![图片描述](https://github.com/ixiaokaikai/SisterAI-Chat-Memory/blob/main/yunxingtu.png)
+
+输入消息后，按ENTER键发送
+
+---
 ## 环境依赖
 ```bash
 # requirements.txt
