@@ -1,16 +1,21 @@
-@@ -0,0 +1,2 @@
 # SisterAI-Chat-Memory
-基于Tkinter的智能桌面应用，模拟具备长期记忆的拟人化AI角色。采用四级记忆架构（短期/长期/潜在/重要记忆），通过TF-IDF/Cosine相似度实现语义检索，支持角色设定定制与实时流式交互。 A Tkinter-based chatbot implementing hierarchical memory architecture (short-term/long-term/latent/important) with TF-IDF semantic search. Features role customization and real-time streaming responses.
----
-### 项目名称：**SisterAI-Chat**  
-`🤖 具有长期记忆的AI姐姐角色扮演聊天桌面应用`
+基于 Tkinter 的智能桌面应用，模拟具备长期记忆的拟人化 AI 角色。采用四级记忆架构（短期/长期/潜在/重要记忆），通过 TF-IDF/Cosine 相似度实现语义检索，支持角色设定定制与实时流式交互。
+
+A Tkinter-based chatbot implementing hierarchical memory architecture (short-term/long-term/latent/important) with TF-IDF semantic search. Features role customization and real-time streaming responses.
 
 ---
-### 项目简介
-一个基于Tkinter的智能桌面聊天应用，模拟拥有长期记忆的姐姐角色。通过多级记忆管理系统（短期/长期/潜在/重要记忆）和语义检索技术，实现自然连贯的上下文对话，支持自定义角色设定和流式响应交互。
+
+## 项目名称：**SisterAI-Chat**  
+`🤖 具有长期记忆的 AI 姐姐角色扮演聊天桌面应用`
 
 ---
-### 核心功能
+
+## 项目简介
+一个基于 Tkinter 的智能桌面聊天应用，模拟拥有长期记忆的姐姐角色。通过多级记忆管理系统（短期/长期/潜在/重要记忆）和语义检索技术，实现自然连贯的上下文对话，支持自定义角色设定和流式响应交互。
+
+---
+
+## 核心功能
 - 🎭 可定制的姐弟角色扮演对话模式
 - 🧠 四级记忆管理系统（自动压缩/检索/存储）
 - 🔍 TF-IDF + 余弦相似度语义检索
@@ -19,7 +24,8 @@
 - ⚡ 流式响应与线程安全机制
 
 ---
-### 环境依赖
+
+## 环境依赖
 ```bash
 # requirements.txt
 Python                     3.10.16
@@ -28,16 +34,17 @@ scikit-learn               1.6.1
 ```
 
 ---
-### 快速开始
-1. 克隆仓库：
+
+## 快速开始
+1. **克隆仓库**：
 ```bash
 git clone github.com/ixiaokaikai/SisterAI-Chat-Memory.git
 cd SisterAI-Chat
 ```
 
-2. 安装依赖：
+2. **安装依赖**：
 ```bash  
-# 创建Python 3.10虚拟环境  
+# 创建 Python 3.10 虚拟环境  
 conda create --name aitalk python=3.10 -y  
 
 # 激活环境  
@@ -47,21 +54,22 @@ conda activate aitalk
 pip install openai==1.65.1 scikit-learn==1.6.1  
 ```  
 
-3. 配置环境：
+3. **配置环境**：
 ```python
-# 在main.py中设置（首次运行自动生成）
-AI_API_KEY = "your_api_key_here"  # 支持OpenAI格式API
+# 在 main.py 中设置（首次运行自动生成）
+AI_API_KEY = "your_api_key_here"  # 支持 OpenAI 格式 API
 AI_BASE_URL = "https://your.model.endpoint"  # 云端或本地部署
 AI_MODEL = "your-model-name"
 ```
 
-4. 启动应用：
+4. **启动应用**：
 ```bash
 python main.py
 ```
 
 ---
-### 项目结构
+
+## 项目结构
 ```
 SisterAI-Chat/
 ├── memory/               # 记忆存储目录
@@ -74,7 +82,8 @@ SisterAI-Chat/
 ```
 
 ---
-### 高级配置
+
+## 高级配置
 1. **角色定制**：
 ```python
 ROLE_PROFILE = """
@@ -99,25 +108,26 @@ MEMORY_COMPRESSION_LENGTH = 15  # 对话压缩阈值
 ```
 
 ---
-提交Issue时请附上：  
-✅ 操作系统版本  
-✅ Python环境信息  
-✅ 复现步骤截图
+
+## 提交 Issue 指南
+当你提交 Issue 时，请附上以下信息：
+- ✅ 操作系统版本
+- ✅ Python 环境信息
+- ✅ 复现步骤截图
+
 ---
 
-
-
-### Project Name: **SisterAI-Chat**  
+## Project Name: **SisterAI-Chat**  
 `🤖 AI Sister Role-Playing Chat Desktop App with Long-Term Memory`
 
 ---
 
-### Project Overview  
+## Project Overview  
 A Tkinter-based intelligent desktop chat application that simulates a sister character with long-term memory. Features multi-level memory management (short-term/long-term/potential/critical memory) and semantic search technology to achieve natural contextual conversations, supporting customizable role configurations and streaming response interactions.
 
 ---
 
-### Core Features  
+## Core Features  
 - 🎭 Customizable sibling role-playing dialogue mode  
 - 🧠 Four-level memory system (auto-compression/retrieval/storage)  
 - 🔍 TF-IDF + Cosine Similarity semantic search  
@@ -127,7 +137,7 @@ A Tkinter-based intelligent desktop chat application that simulates a sister cha
 
 ---
 
-### Environment Requirements  
+## Environment Requirements  
 ```bash
 # requirements.txt  
 Python                     3.10.16  
@@ -137,16 +147,16 @@ scikit-learn               1.6.1
 
 ---
 
-### Quick Start  
-1. Clone repository:  
+## Quick Start  
+1. **Clone repository**:  
 ```bash  
 git clone github.com/ixiaokaikai/SisterAI-Chat-Memory.git  
 cd SisterAI-Chat  
 ```  
 
-2. Install dependencies:  
+2. **Install dependencies**:  
 ```bash  
-# 创建Python 3.10虚拟环境  
+# 创建 Python 3.10 虚拟环境  
 conda create --name aitalk python=3.10 -y  
 
 # 激活环境  
@@ -156,7 +166,7 @@ conda activate aitalk
 pip install openai==1.65.1 scikit-learn==1.6.1  
 ```  
 
-3. Configure environment:  
+3. **Configure environment**:  
 ```python  
 # Set in main.py (auto-generated on first run)  
 AI_API_KEY = "your_api_key_here"  # Supports OpenAI-compatible APIs  
@@ -164,14 +174,14 @@ AI_BASE_URL = "https://your.model.endpoint"  # Cloud or local deployment
 AI_MODEL = "your-model-name"  
 ```  
 
-4. Launch application:  
+4. **Launch application**:  
 ```bash  
 python main.py  
 ```  
 
 ---
 
-### Project Structure  
+## Project Structure  
 ```
 SisterAI-Chat/  
 ├── memory/               # Memory storage  
@@ -185,7 +195,7 @@ SisterAI-Chat/
 
 ---
 
-### Advanced Configuration  
+## Advanced Configuration  
 1. **Role Customization**:  
 ```python  
 ROLE_PROFILE = """  
@@ -209,9 +219,14 @@ MEMORY_COMPRESSION_LENGTH = 15  # Conversation compression threshold
 # AI_MODEL = "local-model-name"  
 ```  
 
----  
-When submitting issues, please include:  
-✅ OS version  
-✅ Python environment details  
-✅ Reproduction steps with screenshots  
 ---
+
+## Issue Submission Guidelines
+When submitting issues, please include the following information:
+- ✅ OS version
+- ✅ Python environment details
+- ✅ Reproduction steps with screenshots
+
+---
+
+希望这些修改能让你的 `README.md` 文件更符合 GitHub 风格并且更易于阅读和理解。如果你还有其他需求或修改意见，请随时告诉我。 
