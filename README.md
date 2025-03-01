@@ -1,9 +1,11 @@
 # SisterAI-Chat-Memory
 `🤖 具有长期记忆的 AI 姐姐角色扮演聊天桌面应用`
 
-基于 Tkinter 的智能桌面应用，模拟具备长期记忆的拟人化 AI 角色。采用四级记忆架构（短期/长期/潜在/重要记忆），通过 TF-IDF/Cosine 相似度实现语义检索，支持角色设定定制与实时流式交互。
+基于Tkinter的智能桌面应用，通过四级记忆架构（短期/长期/潜在/重要）模拟拟人化AI伙伴。记忆系统完全本地化存储，采用TF-IDF加权与余弦相似度算法实现语义检索，保障对话连贯性。支持OpenAI API及自定义模型接口，内置角色编辑器可快速构建个性化AI形象。
+实时流式交互引擎提供类人类应答节奏，但长期记忆检索可能增加tokens消耗。适用于需要持续智能陪伴或创意孵化的场景，轻量界面兼顾功能与隐私安全。
 
-A Tkinter-based chatbot implementing hierarchical memory architecture (short-term/long-term/latent/important) with TF-IDF semantic search. Features role customization and real-time streaming responses.
+A Tkinter-based smart desktop app with a four-tier memory architecture (short/long/latent/critical) for humanized AI interaction. Features localized memory storage with TF-IDF and cosine similarity for semantic retrieval. Compatible with OpenAI API and custom model interfaces, offering a role editor for personalized AI creation.
+Real-time streaming responses mimic human pacing, though persistent memory searches may raise token costs. Ideal for sustained companionship or creative workflows, with a lightweight GUI prioritizing privacy and usability.
 
 ---
 
