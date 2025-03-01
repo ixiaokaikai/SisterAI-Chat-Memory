@@ -43,7 +43,7 @@ scikit-learn               1.6.1
 1. **克隆仓库**：
 ```bash
 git clone github.com/ixiaokaikai/SisterAI-Chat-Memory.git
-cd SisterAI-Chat
+cd SisterAI-Chat-Memory
 ```
 
 2. **安装依赖**：
@@ -155,7 +155,7 @@ scikit-learn               1.6.1
 1. **Clone repository**:  
 ```bash  
 git clone github.com/ixiaokaikai/SisterAI-Chat-Memory.git  
-cd SisterAI-Chat  
+cd SisterAI-Chat-Memory
 ```  
 
 2. **Install dependencies**:  
