@@ -25,6 +25,10 @@ A Tkinter-based chatbot implementing hierarchical memory architecture (short-ter
 
 ---
 
+## 流程图
+![图片描述](https://github.com/ixiaokaikai/SisterAI-Chat-Memory/blob/main/liuchengtu.png)
+
+---
 ## 环境依赖
 ```bash
 # requirements.txt
@@ -228,5 +232,3 @@ When submitting issues, please include the following information:
 - ✅ Reproduction steps with screenshots
 
 ---
-
-希望这些修改能让你的 `README.md` 文件更符合 GitHub 风格并且更易于阅读和理解。如果你还有其他需求或修改意见，请随时告诉我。 
