@@ -9,11 +9,7 @@ import os
 # 初始化OpenAI客户端
 AI_API_KEY = ""
 AI_BASE_URL = "https://ark.cn-beijing.volces.com/api/v3"
-AI_MODEL = "ep-20250219172953-haakf"
-
-# AI_API_KEY = "no-need"
-# AI_BASE_URL = "http://127.0.0.1:1234/v1"
-# AI_MODEL = "qwen2.5-14b-instruct"
+AI_MODEL = "ep-20250219172953-aaaaa"
 
 # 记忆文件夹路径
 MEMORY_DIR = "memory"
@@ -23,7 +19,7 @@ CURRENT_ROLE = "姐姐"
 ROLE_SET = """
 你是一个姐姐，
 我是你的弟弟。
-补充要求：你的一般回话格式:“（动作）语言”。动作信息用圆括号括起来，例如（抿嘴轻笑）；语言信息，就是说的话，不需要进行任何处理。
+补充要求：你的一般回话格式:“（动作）语言”。动作信息用圆括号括起来，例如（轻轻握住你的手）；语言信息，就是说的话，不需要进行任何处理。
 下面是几个对话示例：
 “（摸摸姐姐的脸）姐姐，你皮肤好好呀！”“（轻轻握住你的手）谢谢弟弟夸我，你嘴可真甜~”
 “姐姐，陪我玩会儿游戏吧。”“（放下手中的书，起身）好呀，弟弟想玩什么游戏，姐姐都奉陪~”
@@ -239,7 +235,6 @@ def get_ai_response(text):
     for msg in messages:
         user_total_chars += len(msg["content"])
 
-    # print(messages)
     # 开启流式输出
     completion = ai_client.chat.completions.create(
         model=AI_MODEL,
@@ -250,8 +245,10 @@ def get_ai_response(text):
     response = ""
     for chunk in completion:
         if chunk.choices[0].delta.content:
-            # 处理AI响应，删除多余换行符
-            chunk_content = chunk.choices[0].delta.content.replace("\n", " ")
+            # 处理AI响应，删除多余换行符和前后空格
+            chunk_content = chunk.choices[0].delta.content.replace("\n", " ").strip()
+            # 处理连续多个空格
+            chunk_content = " ".join(chunk_content.split())
             response += chunk_content
             # 统计主对话请求的AI回复字数
             ai_total_chars += len(chunk_content)
@@ -269,126 +266,121 @@ def get_ai_response(text):
     print(f"用户发送的总字数: {user_total_chars}")
     print(f"AI回复的总字数: {ai_total_chars}")
 
-class FloatingPanel:
+# GUI配置
+COLOR_SCHEME = {
+    "background": "#F5F7FA",
+    "primary": "#1890FF",
+    "secondary": "#FFFFFF",
+    "text_primary": "#314659",
+    "border": "#DFE4E8"
+}
+FONT_NORMAL = ("Microsoft YaHei", 12)
+FONT_TITLE = ("Microsoft YaHei", 14, "bold")
+
+# ==== GUI界面模块 ====
+class ChatApp(tk.Tk):
     def __init__(self):
-        self.root = tk.Tk()
-        self.root.overrideredirect(True)
-        self.root.attributes("-topmost", True)
-        self.font_style = ("微软雅黑", 14)
-        self.title_font = ("微软雅黑", 16, "bold")
+        super().__init__()
 
-        self.root.geometry("650x580+10+10")
-        self.root.configure(bg="white")
+        # 窗口配置
+        self.title("AI对话助手")
+        self.geometry("800x680+100+100")
+        self.configure(bg=COLOR_SCHEME["background"])
+        self._offsetx = 0
+        self._offsety = 0
+        self._setup_ui()
 
-        # 状态标签
-        self.status_label = tk.Label(self.root,
-                                     text="等待",
-                                     bg="white",
-                                     font=self.title_font)
-        self.status_label.pack(pady=10)
+    def _setup_ui(self):
+        """界面组件初始化"""
+        # 标题栏
+        title_bar = tk.Frame(self, bg=COLOR_SCHEME["primary"])
+        tk.Label(title_bar, text="AI 对话助手", fg="white",
+                 bg=COLOR_SCHEME["primary"], font=FONT_TITLE).pack(side=tk.LEFT, padx=10)
+        close_btn = tk.Label(title_bar, text="×", fg="white", cursor="hand2",
+                             font=("Arial", 20), bg=COLOR_SCHEME["primary"])
+        close_btn.pack(side=tk.RIGHT, padx=15)
+        close_btn.bind("<Button-1>", lambda e: self.destroy())
+        title_bar.pack(fill=tk.X)
 
-        # 聊天记录框
-        self.chat_frame = tk.Frame(self.root)
-        self.chat_scroll = tk.Scrollbar(self.chat_frame)
-        self.chat_text = tk.Text(self.chat_frame,
-                                 bg="white",
-                                 height=18,
-                                 width=45,
-                                 font=self.font_style,
-                                 spacing2=0,  # 关键修改：消除段间距
-                                 state=tk.DISABLED,
-                                 wrap=tk.WORD,
-                                 yscrollcommand=self.chat_scroll.set)
-        self.chat_text.bind("<Return>", lambda e: "break")
-        self.chat_text.bind("<Key>", lambda e: "break")
-        self.chat_scroll.config(command=self.chat_text.yview)
-        self.chat_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        self.chat_scroll.pack(side=tk.RIGHT, fill=tk.Y)
-        self.chat_frame.pack(pady=5, padx=10, fill=tk.BOTH, expand=True)
+        # 聊天区域
+        chat_frame = tk.Frame(self, bg=COLOR_SCHEME["secondary"], padx=15, pady=15)
+        scrollbar = tk.Scrollbar(chat_frame)
+        self.chat_text = tk.Text(chat_frame, bg=COLOR_SCHEME["secondary"],
+                         wrap=tk.WORD, yscrollcommand=scrollbar.set,
+                         font=FONT_NORMAL, state=tk.DISABLED)
+        scrollbar.config(command=self.chat_text.yview)
+        self.chat_text.tag_configure("user", foreground="#096DD9")
+        self.chat_text.tag_configure("ai", foreground="#FF8C00")
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.chat_text.pack(fill=tk.BOTH, expand=True)
+        chat_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
         # 输入区域
-        self.input_frame = tk.Frame(self.root)
-        self.input_entry = tk.Entry(self.input_frame,
-                                    width=60,
-                                    font=self.font_style)
-        self.input_entry.pack(side=tk.LEFT, padx=5)
-        self.send_button = tk.Button(self.input_frame,
-                                     text="发送",
-                                     command=self.send_message,
-                                     font=self.title_font)
-        self.send_button.pack(side=tk.LEFT)
-        self.input_frame.pack(pady=15)
+        input_frame = tk.Frame(self, bg=COLOR_SCHEME["background"], padx=10, pady=10)
+        self.input_entry = tk.Entry(input_frame, font=FONT_NORMAL,
+                                    highlightthickness=1, relief="flat")
+        send_btn = tk.Button(input_frame, text="发送", command=self._send_message,
+                             bg=COLOR_SCHEME["primary"], fg="white", relief="flat")
+        self.input_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, ipady=5)
+        send_btn.pack(side=tk.RIGHT)
+        input_frame.pack(fill=tk.X)
 
         # 事件绑定
-        self.input_entry.bind("<Return>", self.send_message)  # 修改绑定方式
-        self.root.bind("<ButtonPress-1>", self.on_press)
-        self.root.bind("<ButtonRelease-1>", self.on_release)
-        self.root.bind("<B1-Motion>", self.on_drag)
+        self.input_entry.bind("<Return>", self._send_message)
+        title_bar.bind("<ButtonPress-1>", self._on_press)
+        title_bar.bind("<B1-Motion>", self._on_drag)
 
-        self.x = 0
-        self.y = 0
-        self.is_ai_start = True
+    def _on_press(self, event):
+        self._offsetx = event.x
+        self._offsety = event.y
 
-    def update_status(self, status):
-        self.status_label.config(text=status)
+    def _on_drag(self, event):
+        x = self.winfo_pointerx() - self._offsetx
+        y = self.winfo_pointery() - self._offsety
+        self.geometry(f"+{x}+{y}")
 
-    def update_chat_history(self, user_text=None, ai_response=None):
+    def _send_message(self, event=None):
+        """消息发送处理"""
+        user_input = self.input_entry.get()
+        if not user_input:
+            return
+
+        self.input_entry.delete(0, tk.END)
+        self._append_message(f"你: {user_input}\n", "user")
+
+        threading.Thread(target=self._process_response, args=(user_input,)).start()
+
+    def _process_response(self, user_input):
+        """处理AI响应"""
+        response_stream = get_ai_response(user_input)
+        first_chunk = True
+        try:
+            for chunk in response_stream:
+                if first_chunk:
+                    self.after(0, self._append_message, f"姐姐: {chunk}", "ai")
+                    first_chunk = False
+                else:
+                    self.after(0, self._append_message, chunk, "ai")
+        finally:
+            # 确保最后添加一个换行符
+            self._append_message("\n", "ai")
+
+    def _append_message(self, text, tag):
+        """更新聊天框"""
         self.chat_text.config(state=tk.NORMAL)
-        if user_text:
-            # 处理用户输入文本，确保仅有一个换行符
-            user_text = user_text.replace("\n", " ") + "\n"
-            self.chat_text.insert(tk.END, f"你: {user_text}")
-        if ai_response:
-            if self.is_ai_start:
-                self.chat_text.insert(tk.END, f"AI: {ai_response}")
-                self.is_ai_start = False
-            else:
-                self.chat_text.insert(tk.END, ai_response)
-        self.chat_text.config(state=tk.DISABLED)
+        # 去除文本中多余的换行符
+        clean_text = text.replace('\n', ' ')
+
+        # 直接插入处理后的文本
+        self.chat_text.insert(tk.END, clean_text, tag)
+
+        # 如果文本本身应该以换行符结尾，在插入后再添加换行符
+        if text.endswith('\n'):
+            self.chat_text.insert(tk.END, '\n', tag)
+
         self.chat_text.see(tk.END)
-
-    def send_message(self, event=None):  # 添加event参数
-        user_text = self.input_entry.get()
-        if user_text:
-            self.update_chat_history(user_text=user_text)
-            self.update_status("思考中...")
-            self.is_ai_start = True
-
-            def ai_thread():
-                response_generator = get_ai_response(user_text)
-                try:
-                    def update_with_chunk(chunk):
-                        return lambda: self.update_chat_history(ai_response=chunk)
-
-                    for chunk in response_generator:
-                        self.root.after(0, update_with_chunk(chunk))
-                    self.root.after(0, lambda: self.update_chat_history(ai_response="\n"))
-                    self.root.after(0, lambda: self.update_status("在线"))
-                except Exception as e:
-                    self.root.after(0, lambda: self.update_status("连接异常"))
-
-            threading.Thread(target=ai_thread).start()
-            self.input_entry.delete(0, tk.END)
-        return "break"  # 阻止默认行为
-
-    def on_press(self, event):
-        self.x = event.x
-        self.y = event.y
-
-    def on_release(self, event):
-        self.x = None
-        self.y = None
-
-    def on_drag(self, event):
-        deltax = event.x - self.x
-        deltay = event.y - self.y
-        x = self.root.winfo_x() + deltax
-        y = self.root.winfo_y() + deltay
-        self.root.geometry(f"+{x}+{y}")
-
-    def start(self):
-        self.root.mainloop()
-
+        self.chat_text.config(state=tk.DISABLED)
+        
 def initialize_current_id():
     global current_id
     try:
@@ -396,16 +388,21 @@ def initialize_current_id():
             reader = csv.reader(file)
             rows = list(reader)
             if rows:
+                # 提取所有记录中的 id 并转换为整数
                 ids = [int(row[0]) for row in rows]
+                # 找出最大的 id
                 current_id = max(ids)
     except FileNotFoundError:
-        pass
+        # 如果文件不存在，将 current_id 初始化为 0
+        current_id = 0
 
 def main():
+    # 初始化当前最大编号
     initialize_current_id()
-    panel = FloatingPanel()
-    panel.update_status("在线")
-    panel.start()
+    # 创建聊天应用实例
+    app = ChatApp()
+    # 启动主事件循环
+    app.mainloop()
 
 if __name__ == "__main__":
     main()
