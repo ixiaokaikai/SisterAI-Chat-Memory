@@ -60,7 +60,7 @@ pip install openai==1.65.1 scikit-learn==1.6.1
 
 3. **配置环境**：
 ```python
-# 在 main.py 中设置（首次运行自动生成）
+# 在 main.py 中设置
 AI_API_KEY = "your_api_key_here"  # 支持 OpenAI 格式 API
 AI_BASE_URL = "https://your.model.endpoint"  # 云端或本地部署
 AI_MODEL = "your-model-name"
@@ -172,7 +172,7 @@ pip install openai==1.65.1 scikit-learn==1.6.1
 
 3. **Configure environment**:  
 ```python  
-# Set in main.py (auto-generated on first run)  
+# Set in main.py
 AI_API_KEY = "your_api_key_here"  # Supports OpenAI-compatible APIs  
 AI_BASE_URL = "https://your.model.endpoint"  # Cloud or local deployment  
 AI_MODEL = "your-model-name"  
