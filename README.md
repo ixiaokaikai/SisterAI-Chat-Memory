@@ -19,7 +19,7 @@ Real-time streaming responses mimic human pacing, though persistent memory searc
 
 ---
 
-## 流程图
+## 可视化代码流程图
 ![图片描述](https://github.com/ixiaokaikai/SisterAI-Chat-Memory/blob/main/liuchengtu.png)
 
 ---
